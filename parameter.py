@@ -71,10 +71,10 @@ class Parameter(ParameterBase):
         """
         self.flag = flag
         if self.flag:
-            return "enp0s25"
+            return "enp2s0"
 
         else:
-            return "enx0050b6c37e71"
+            return "enp4s6"
 
     def get_support_mode(self):
         return "hello get_support"

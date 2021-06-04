@@ -3,6 +3,12 @@ from ethtools import *
 from parameter import *
 
 # simple API
+def get_ethtool_log(netcard):
+    Ethtool.ethtool_log(netcard)
+
+def update_ethtool_log():
+    pass
+
 def select_local_netcard():
     return Parameter.get_netcard_name(1)
 
@@ -57,15 +63,16 @@ def test():
 
 # simple test case
 def force_mode_test():
-    speed = ["1000","100","10"]
-    duplex = ["full","half"]
+    speed = ["1000", "100", "10"]
+    duplex = ["full", "half"]
 
     local = select_local_netcard()
     lp = select_lp_netcard()
     config_list = input_parameter(speed, duplex)
     current_speed = get_speed()
     current_link = get_link()
-    current_status = get_status_list()
+#    current_status = get_status_list()
+    #print(current_status)
 
     time_err_flag = 0
 
@@ -74,10 +81,12 @@ def force_mode_test():
             if setting == "1000_half":
                 continue
             Ethtool.setup_force_mode(local, setting[0], setting[1])
+            get_ethtool_log(local)
             Ethtool.setup_force_mode(lp, setting[0], setting[1])
-            time.sleep(1)
+            time.sleep(4)
             if current_link == "yes":
-                compare_result(setting[0], setting[1], "off", current_status)
+                print("setting",setting[0],setting[1],"get_status",get_status_list() ,"link", get_link())
+                compare_result(setting[0], setting[1], "off", get_status_list())
             else:
                 time_err_flag = time_err_flag +1
                 print("link up timeout",time_err_flag)

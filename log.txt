@@ -6,26 +6,18 @@ Settings for enp2s0:
 	Supported pause frame use: Symmetric Receive-only
 	Supports auto-negotiation: Yes
 	Supported FEC modes: Not reported
-	Advertised link modes:  10baseT/Half 10baseT/Full 
-	                        100baseT/Half 100baseT/Full 
-	                        1000baseT/Full 
+	Advertised link modes:  10baseT/Half 
 	Advertised pause frame use: No
-	Advertised auto-negotiation: Yes
+	Advertised auto-negotiation: No
 	Advertised FEC modes: Not reported
-	Link partner advertised link modes:  10baseT/Half 10baseT/Full 
-	                                     100baseT/Half 100baseT/Full 
-	                                     1000baseT/Full 
-	Link partner advertised pause frame use: Symmetric Receive-only
-	Link partner advertised auto-negotiation: Yes
-	Link partner advertised FEC modes: Not reported
-	Speed: 1000Mb/s
-	Duplex: Full
+	Speed: 10Mb/s
+	Duplex: Half
 	Port: MII
 	PHYAD: 0
 	Transceiver: internal
 	Auto-negotiation: off
-Cannot get wake-on-lan settings: Operation not permitted
+	Supports Wake-on: pumbag
+	Wake-on: d
 	Current message level: 0x00000137 (311)
 			       drv probe link ifdown ifup tx_queued
 	Link detected: yes
-

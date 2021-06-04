@@ -44,3 +44,7 @@ class Ethtool(EthtoolBase):
         else:
             print(f"\033[1;32;40m Test {cls.speed}M {cls.duplex} is success\033[0m")
             return 0
+    @classmethod
+    def ethtool_log(cls, netcard_name: str):
+        cls.netcard_name = netcard_name
+        os.system(f"sudo ethtool {cls.netcard_name} > log.txt")

@@ -12,12 +12,12 @@ def select_lp_netcard():
 def input_parameter(speed: list, duplex: list):
 
     def division(i):
-        configs = i.split("|")
+        configs = i.split("/")
         if configs[0] =="1000" and configs[1] == "half":
             return "1000_half"
         return configs
 
-    config =[m +"|"+ n for m in speed for n in duplex]
+    config =[m +"/"+ n for m in speed for n in duplex]
     con = map(division, config)
     return list(con)
 
@@ -76,7 +76,7 @@ def force_mode_test():
             Ethtool.setup_force_mode(local, setting[0], setting[1])
             Ethtool.setup_force_mode(lp, setting[0], setting[1])
             time.sleep(1)
-            if current_link == "up":
+            if current_link == "yes":
                 compare_result(setting[0], setting[1], "off", current_status)
             else:
                 time_err_flag = time_err_flag +1

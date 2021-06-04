@@ -23,7 +23,7 @@ Settings for enp2s0:
 	Port: MII
 	PHYAD: 0
 	Transceiver: internal
-	Auto-negotiation: on
+	Auto-negotiation: off
 Cannot get wake-on-lan settings: Operation not permitted
 	Current message level: 0x00000137 (311)
 			       drv probe link ifdown ifup tx_queued

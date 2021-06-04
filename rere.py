@@ -1,4 +1,5 @@
 import re
+import functools
 
 # re.search it will match all string until find a matchs
 def test1():
@@ -64,37 +65,43 @@ def AN():
     f.close()
 
 def link():
+    with open('log.txt','r', encoding='UTF-8') as f:
+        print("====link_flag====")
+        for line in f.readlines():
+            support = re.findall(r"Link detected:\s*(\w+)", line);
+            if len(support):
+                print(support[0])
+
+def support_link():
+    flag =""
+    l =[]
+    with open('log.txt','r', encoding='UTF-8') as f:
+        print("====support_link====")
+        for line in f.readlines():
+            support = re.findall(r"(?<=Supported link modes:)\s*(.+)", line);
+            if len(support):
+                flag = "support"
+            if flag == "support" and re.match(r"\s*(\d+)", line) != None:
+                support = (re.findall("\s*(.+)", line))
+            l = l + support
+            if re.search(r"Supported pause frame use:", line) != None:
+                return l
+
+def support_an():
     f=open('log.txt','r', encoding='UTF-8')
-    print("====link flag====")
+    print("====suppor_an====")
     for line in f.readlines():
-        support = re.findall(r"Link detected:\s*(\w+)", line);
+        support = re.findall(r"Supports auto-negotiation:\s*(\w+)", line);
         for i in support:
             print(i)
     f.close()
 
-def support():
-    flag =""
-    l =[]
-    f=open('log.txt','r', encoding='UTF-8')
-    print("====support====")
-    for line in f.readlines():
-        support = re.findall(r"(?<=Supported link modes:)\s*(.+)", line);
-        if len(support):
-            flag = "support"
-        if flag == "support" and re.match(r"\s*(\d+)", line) != None:
-            support = (re.findall("\s*(.+)", line))
-        l = l + support
-        if re.search(r"Supported pause frame use:", line) != None:
-            print(l)
-            break
-    f.close()
 
-
-def advertised():
+def advertised_link():
     flag = ""
     l = []
     f=open('log.txt','r', encoding='UTF-8')
-    print("====advertised====")
+    print("====advertised_link====")
     for line in f.readlines():
         ad = re.findall(r"(?<=Advertised link modes:)\s*(.+)", line);
         if len(ad):
@@ -103,15 +110,23 @@ def advertised():
             ad = (re.findall("\s*(.+)", line))
         l = l + ad
         if re.search(r"Advertised pause frame use:", line) != None:
-            print(l)
-            break
+            return l
     f.close()
 
-def lp_advertised():
+def advertised_an():
+    f=open('log.txt','r', encoding='UTF-8')
+    print("====advertised_an====")
+    for line in f.readlines():
+        support = re.findall(r"Advertised auto-negotiation:\s*(\w+)", line);
+        for i in support:
+            print(i)
+    f.close()
+
+def lp_advertised_link():
     flag = ""
     l = []
     f=open('log.txt','r', encoding='UTF-8')
-    print("====lp_advertised====")
+    print("====lp_advertised_link====")
     for line in f.readlines():
         lp_ad = re.findall(r"(?<=Link partner advertised link modes:)\s*(.+)", line);
         if len(lp_ad):
@@ -123,25 +138,43 @@ def lp_advertised():
             return l
     f.close()
 
+def lp_advertised_an():
+    f=open('log.txt','r', encoding='UTF-8')
+    print("====lp_advertised_an====")
+    for line in f.readlines():
+        support = re.findall(r"Link partner advertised auto-negotiation:\s*(\w+)", line);
+        for i in support:
+            print(i)
+    f.close()
+
 def division_log(log_list: list):
     def do(i):
         s = i.split(" ")
         l= [x.strip() for x in s if x.strip() != ""]
         return l
-
     r = map(do, log_list)
-    return list(r)
+    dd = sum(r, [])
+    return dd
+
+def logs(func):
+    @functools.wraps(funs)
+    def wrapper(*args, **kw):
+        print("start call %s():" % func.__name__)
+        res = func(*args, **kw)
+        division_log(res)
+        print("end call %s():" % func.__name__)
+        return res
+    return wrapper
 
 
 def test0():
-    a = ["aaaa"]
-    b = ["bbbb"]
-    s = ["hello world"]
-    s.extend(a)
-    s.extend(b)
-    print(s)
-    for i in s:
-        print(i)
+    l = "10baseT/Half"
+    a = re.findall(r"(\d+)", l)
+    b = re.findall(r"/(\w+)", l)
+    c = a +b
+    print("a",a)
+    print("b",b)
+    print("c",c)
 
 def main():
     test1()
@@ -151,10 +184,12 @@ def main():
     full()
     AN()
     link()
-    support()
-    advertised()
-#    lp_advertised()
-    print(division_log(lp_advertised()))
+    support_an()
+    advertised_an()
+    lp_advertised_an()
+    print(division_log(support_link()))
+    print(division_log(advertised_link()))
+    print(division_log(lp_advertised_link()))
 #    test0()
 
 if __name__ == "__main__":

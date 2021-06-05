@@ -3,9 +3,9 @@ class EthtoolBase():
     def __init__(self):
         pass
 
-    def setup_an_mode(self, speed, dulpex, advertising, autoneg ="on"):
+    def setup_autoneg_mode(self, speed, dulpex, advertising, autoneg ="on"):
         """
-        an_mode
+        autoneg_mode
         """
         raise NotImplemented
 

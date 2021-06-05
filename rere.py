@@ -189,7 +189,7 @@ def main():
     lp_advertised_an()
     print(division_log(support_link()))
     print(division_log(advertised_link()))
-    print(division_log(lp_advertised_link()))
+#    print(division_log(lp_advertised_link()))
 #    test0()
 
 if __name__ == "__main__":

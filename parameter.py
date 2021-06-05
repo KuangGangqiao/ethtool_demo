@@ -5,7 +5,7 @@ class Parameter(ParameterBase):
     def __init__(self):
         pass
 
-    class get_current_status():
+    class Get_ethtool():
         """
         speed | duplex | link | AN
         """
@@ -14,7 +14,6 @@ class Parameter(ParameterBase):
 
         def speed(self):
             with open('log.txt','r', encoding='UTF-8') as f:
-                print("====speed====")
                 for line in f.readlines():
                     speed = re.findall(r"Speed:\s*(\d+)", line);
                     if len(speed):
@@ -22,7 +21,6 @@ class Parameter(ParameterBase):
 
         def duplex(self):
             with open('log.txt','r', encoding='UTF-8') as f:
-                print("====duplex====")
                 for line in f.readlines():
                     duplex = re.findall(r"Duplex:\s*(\w+)", line);
                     if len(duplex):
@@ -33,7 +31,6 @@ class Parameter(ParameterBase):
 
         def autoneg(self):
             with open('log.txt','r', encoding='UTF-8') as f:
-                print("====duplex====")
                 for line in f.readlines():
                     autoneg = re.findall(r"Auto-negotiation:\s*(\w+)", line);
                     if len(autoneg):
@@ -43,7 +40,6 @@ class Parameter(ParameterBase):
 
         def link(self):
             with open('log.txt','r', encoding='UTF-8') as f:
-                print("====duplex====")
                 for line in f.readlines():
                     link = re.findall(r"Link detected:\s*(\w+)", line);
                     if len(link):
@@ -54,13 +50,68 @@ class Parameter(ParameterBase):
         def status_list(self):
             lists =[]
             if self.speed() =="1000" and self.duplex() == "half":
-                raise "Don't support 1000M|half"
+                raise "Don't support 1000M/half"
             lists.append(self.speed())
             lists.append(self.duplex())
             lists.append(self.autoneg())
             return lists
 
+        def support_link():
+            flag =""
+            l =[]
+            with open('log.txt','r', encoding='UTF-8') as f:
+                for line in f.readlines():
+                    support = re.findall(r"(?<=Supported link modes:)\s*(.+)", line);
+                    if len(support):
+                        flag = "support"
+                    if flag == "support" and re.match(r"\s*(\d+)", line) != None:
+                        support = (re.findall("\s*(.+)", line))
+                    l = l + support
+                    if re.search(r"Supported pause frame use:", line) != None:
+                        return l
 
+        def support_an():
+            with open('log.txt','r', encoding='UTF-8') as f:
+                for line in f.readlines():
+                    support = re.findall(r"Supports auto-negotiation:\s*(\w+)", line);
+                    for i in support:
+                        return i
+
+
+        def advertised_link():
+            flag = ""
+            l = []
+            with open('log.txt','r', encoding='UTF-8'):
+                for line in f.readlines():
+                    ad = re.findall(r"(?<=Advertised link modes:)\s*(.+)", line);
+                    if len(ad):
+                        flag = "advertised"
+                    if  flag == "advertised" and re.match(r"\s*(\d+)", line) != None:
+                        ad = (re.findall("\s*(.+)", line))
+                    l = l + ad
+                    if re.search(r"Advertised pause frame use:", line) != None:
+                        return l
+
+        def advertised_an():
+            with open('log.txt','r', encoding='UTF-8'):
+                for line in f.readlines():
+                    support = re.findall(r"Advertised auto-negotiation:\s*(\w+)", line);
+                    for i in support:
+                        return i
+
+        def lp_advertised_link():
+            flag = ""
+            l = []
+            f=open('log.txt','r', encoding='UTF-8')
+            for line in f.readlines():
+                lp_ad = re.findall(r"(?<=Link partner advertised link modes:)\s*(.+)", line);
+                if len(lp_ad):
+                    flag = "lp_advertised"
+                if flag == "lp_advertised" and re.match(r"\s*(\d+)", line) != None:
+                    lp_ad = (re.findall("\s*(.+)", line))
+                l = l + lp_ad
+                if re.search(r"Link partner advertised pause frame use:", line) != None:
+                    return l
 
     @classmethod
     def get_netcard_name(self, flag: int):
@@ -76,5 +127,3 @@ class Parameter(ParameterBase):
         else:
             return "enp4s6"
 
-    def get_support_mode(self):
-        return "hello get_support"

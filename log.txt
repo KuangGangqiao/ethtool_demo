@@ -16,8 +16,8 @@ Settings for enp2s0:
 	PHYAD: 0
 	Transceiver: internal
 	Auto-negotiation: off
-	Supports Wake-on: pumbag
+	Supports Wake-on: pumbg
 	Wake-on: d
-	Current message level: 0x00000137 (311)
-			       drv probe link ifdown ifup tx_queued
-	Link detected: yes
+	Current message level: 0x00000033 (51)
+			       drv probe ifdown ifup
+	Link detected: no

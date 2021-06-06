@@ -6,7 +6,7 @@ class Ethtool(EthtoolBase):
     def __init__(self):
         pass
     @classmethod
-    def setup_autoneg_mode(cls, netcard_name: str, advertising: dict, autoneg ="on"):
+    def setup_autoneg_mode(cls, netcard_name: str, advertising: hex, autoneg ="on"):
         """
         autoneg_mode
         """
@@ -14,7 +14,7 @@ class Ethtool(EthtoolBase):
         cls.advertising = advertising
         cls.autoneg = autoneg
 
-        os.system(f"sudo ethtool -s {cla.netcard_name} autoneg {cls.autoneg}")
+        os.system(f"sudo ethtool -s {cls.netcard_name} autoneg {cls.autoneg}")
         os.system(f"sudo ethtool -s {cls.netcard_name} advertise {cls.advertising}")
 
     @classmethod

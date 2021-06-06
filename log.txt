@@ -6,16 +6,17 @@ Settings for enp2s0:
 	Supported pause frame use: Symmetric Receive-only
 	Supports auto-negotiation: Yes
 	Supported FEC modes: Not reported
-	Advertised link modes:  10baseT/Half 
+	Advertised link modes:  10baseT/Half 10baseT/Full 
+	                        100baseT/Half 
 	Advertised pause frame use: No
-	Advertised auto-negotiation: No
+	Advertised auto-negotiation: Yes
 	Advertised FEC modes: Not reported
-	Speed: 10Mb/s
-	Duplex: Half
+	Speed: Unknown!
+	Duplex: Unknown! (255)
 	Port: MII
 	PHYAD: 0
 	Transceiver: internal
-	Auto-negotiation: off
+	Auto-negotiation: on
 	Supports Wake-on: pumbg
 	Wake-on: d
 	Current message level: 0x00000033 (51)

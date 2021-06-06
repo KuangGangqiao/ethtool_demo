@@ -26,8 +26,7 @@ class Parameter(ParameterBase):
                     if len(duplex):
                         if duplex[0] not in ["Full", "Half"]:
                             raise "ethtool log duplex is illegal"
-                        duplexs = duplex[0].lower()
-                        return duplexs
+                        return duplex[0]
 
         def autoneg(self):
             with open('log.txt','r', encoding='UTF-8') as f:
@@ -49,8 +48,8 @@ class Parameter(ParameterBase):
 
         def status_list(self):
             lists =[]
-            if self.speed() =="1000" and self.duplex() == "half":
-                raise "Don't support 1000M/half"
+            if self.speed() =="1000" and self.duplex() == "Half":
+                raise "Don't support 1000M/Half"
             lists.append(self.speed())
             lists.append(self.duplex())
             lists.append(self.autoneg())
@@ -125,5 +124,5 @@ class Parameter(ParameterBase):
             return "enp2s0"
 
         else:
-            return "enp4s6"
+            return "enp2s0"
 
